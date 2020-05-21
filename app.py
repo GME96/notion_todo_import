@@ -15,7 +15,7 @@ def createNotionTask(token, collectionURL, content, category, externalid):
     row = cv.collection.add_row()
     row.title = content
     row.category = category
-    row.externalid = externalid
+    row.externalID = externalid
 
 
 @app.route('/create_todo', methods=['GET'])
