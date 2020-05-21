@@ -8,14 +8,14 @@ from flask import request
 app = Flask(__name__)
 
 
-def createNotionTask(token, collectionURL, content, category, externalID):
+def createNotionTask(token, collectionURL, content, category, externalid):
     # notion
     client = NotionClient(token)
     cv = client.get_collection_view(collectionURL)
     row = cv.collection.add_row()
     row.title = content
     row.category = category
-    row.externalID = externalID
+    row.externalid = externalid
 
 
 @app.route('/create_todo', methods=['GET'])
@@ -23,7 +23,7 @@ def create_todo():
 
     todo = request.args.get('todo')
     parentID = request.args.get('parentID')
-    if parentID == '1':
+    if parentID == 'AQMkADAwATYwMAItZDg4ADQtZTM0YS0wMAItMDAKAC4AAAPNUpFw5pxeQqiq0XlCNIkkAQCILp6LM0zpSYe2oI3McKECAANLdDYDAAAA':
         category = 'privat'
     elif parentID == '2':
         category = 'master'
@@ -35,7 +35,7 @@ def create_todo():
         category = 'transport'
     else:
         category = ''
-    externalID = request.args.get('externalID')
+    externalid = request.args.get('externalid')
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("URL")
     createNotionTask(token_v2, url, todo, category, externalID)
