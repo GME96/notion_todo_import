@@ -32,7 +32,7 @@ def createNotionTaskFromCalender(token, collectionURL, content, externalid, dued
     cv = client.get_collection_view(collectionURL)
     row = cv.collection.add_row()
     row.title = content
-    row.category = category
+    row.category = 'privat'
     row.externalid = externalid
     day = datetime.strptime(duedate[:10], '%Y-%m-%d')
     row.duedate = day
@@ -76,14 +76,13 @@ def update_todo():
 @app.route('/create_todo_calender', methods=['GET'])
 def create_todo_calender():
 
-    todo = request.args.get('todo')
-    category = 'privat'
+    content = request.args.get('content')
     duedate = request.args.get('duedate')
     externalid = request.args.get('externalid')
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("URL")
-    createNotionTaskFromCalender(token_v2, url, todo, category, externalid)
-    return f'added {todo} in {category} to Notion!'
+    createNotionTaskFromCalender(token_v2, url, content, externalid, duedate)
+    return f'added  in  to Notion!'
 
 
 if __name__ == '__main__':
