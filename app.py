@@ -17,7 +17,7 @@ def createNotionTask(token, collectionURL, content, category, externalid):
     row.category = category
     row.externalid = externalid
 
-def checkNotionTask(token, collectionURL, externalid):
+def updateNotionTask(token, collectionURL, externalid):
     # notion
     client = NotionClient(token)
     cv = client.get_collection_view(collectionURL)
@@ -57,7 +57,7 @@ def update_todo():
     externalid = request.args.get('externalid')
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("URL")
-    createNotionTask(token_v2, url, externalid)
+    updateNotionTask(token_v2, url, externalid)
     return f'checked {todo} set done to Notion!'
 
 
