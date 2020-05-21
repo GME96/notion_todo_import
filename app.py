@@ -38,6 +38,17 @@ def createNotionTaskFromCalender(token, collectionURL, content, externalid, dued
     row.duedate = day
     row.source = 'calender'
 
+# def structureToDo(token, collectionURL, startdate, enddate):
+#     # notion
+#     client = NotionClient(token)
+#     cv = client.get_collection_view(collectionURL)
+#     for row in cv.collection.get_rows():
+#         if row.duedate != None:
+#             if startdate < row.duedate < enddate and row.done is False and row.Wochentag = None:
+#                 row.done = True
+
+
+
 @app.route('/create_todo', methods=['GET'])
 def create_todo():
 
@@ -85,6 +96,16 @@ def create_todo_calender():
     createNotionTaskFromCalender(token_v2, url, content, externalid, duedate)
     return f'added  in  to Notion!'
 
+# @app.route('/structureToDo', methods=['GET'])
+# def create_todo_calender():
+#
+#     content = request.args.get('content')
+#     duedate = request.args.get('duedate')
+#     externalid = request.args.get('externalid')
+#     token_v2 = os.environ.get("TOKEN")
+#     url = os.environ.get("URL")
+#     createNotionTaskFromCalender(token_v2, url, content, externalid, duedate)
+#     return f'added  in  to Notion!'
 
 if __name__ == '__main__':
     app.debug = True
