@@ -14,7 +14,6 @@ def createNotionTask(token, collectionURL, content, category):
     cv = client.get_collection_view(collectionURL)
     row = cv.collection.add_row()
     row.title = content
-    if
     row.category = category
 
 
@@ -22,7 +21,11 @@ def createNotionTask(token, collectionURL, content, category):
 def create_todo():
 
     todo = request.args.get('todo')
-    category = request.args.get('category')
+    parentID = request.args.get('parentID')
+    if parentID == ''
+        category = 'privat'
+    elif
+
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("URL")
     createNotionTask(token_v2, url, todo, category)
