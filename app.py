@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 
 
-def createNotionTask(token, collectionURL, content, category, externalid):
+def createNotionTask(token, collectionURL, content, category, externalid, weekday):
     # notion
     client = NotionClient(token)
     cv = client.get_collection_view(collectionURL)
@@ -17,6 +17,7 @@ def createNotionTask(token, collectionURL, content, category, externalid):
     row.title = content
     row.category = category
     row.externalid = externalid
+    row.Wochentag = weekday
 
 def updateNotionTask(token, collectionURL, externalid):
     # notion
@@ -71,9 +72,10 @@ def create_todo():
     else:
         category = ''
     externalid = request.args.get('externalid')
+    weekday = request.args.get('weekday')
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("URL")
-    createNotionTask(token_v2, url, todo, category, externalid)
+    createNotionTask(token_v2, url, todo, category, externalid, weekday)
     return f'added {todo} in {category} to Notion!'
 
 @app.route('/update_todo', methods=['GET'])
