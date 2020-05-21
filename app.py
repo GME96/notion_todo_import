@@ -58,7 +58,7 @@ def update_todo():
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("URL")
     updateNotionTask(token_v2, url, externalid)
-    return f'checked {todo} set done to Notion!'
+    return f'checked set done to Notion!'
 
 
 if __name__ == '__main__':
