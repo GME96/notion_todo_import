@@ -3,6 +3,7 @@ import os
 from notion.client import NotionClient
 from flask import Flask
 from flask import request
+from datetime import datetime, timedelta
 
 
 app = Flask(__name__)
@@ -24,6 +25,17 @@ def updateNotionTask(token, collectionURL, externalid):
     for row in cv.collection.get_rows(search=externalid):
         if row.externalid == externalid:
             row.done = True
+
+def createNotionTaskFromCalender(token, collectionURL, content, externalid, duedate):
+    # notion
+    client = NotionClient(token)
+    cv = client.get_collection_view(collectionURL)
+    row = cv.collection.add_row()
+    row.title = content
+    row.category = category
+    row.externalid = externalid
+    day = datetime.strptime(duedate[:10], '%Y-%m-%d')
+    row.duedate = day
 
 @app.route('/create_todo', methods=['GET'])
 def create_todo():
@@ -60,6 +72,18 @@ def update_todo():
     url = os.environ.get("URL")
     updateNotionTask(token_v2, url, externalid)
     return f'checked set done to Notion!'
+
+@app.route('/create_todo_calender', methods=['GET'])
+def create_todo_calender():
+
+    todo = request.args.get('todo')
+    category = 'privat'
+    duedate = request.args.get('duedate')
+    externalid = request.args.get('externalid')
+    token_v2 = os.environ.get("TOKEN")
+    url = os.environ.get("URL")
+    createNotionTaskFromCalender(token_v2, url, todo, category, externalid)
+    return f'added {todo} in {category} to Notion!'
 
 
 if __name__ == '__main__':
