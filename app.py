@@ -14,6 +14,7 @@ def createNotionTask(token, collectionURL, content, category):
     cv = client.get_collection_view(collectionURL)
     row = cv.collection.add_row()
     row.title = content
+    if
     row.category = category
 
 
