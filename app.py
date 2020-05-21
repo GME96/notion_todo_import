@@ -22,7 +22,7 @@ def updateNotionTask(token, collectionURL, externalid):
     client = NotionClient(token)
     cv = client.get_collection_view(collectionURL)
     for row in cv.collection.get_rows(search=externalid):
-        row.done = 1
+        row.done = True
 
 @app.route('/create_todo', methods=['GET'])
 def create_todo():
