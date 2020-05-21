@@ -36,6 +36,7 @@ def createNotionTaskFromCalender(token, collectionURL, content, externalid, dued
     row.externalid = externalid
     day = datetime.strptime(duedate[:10], '%Y-%m-%d')
     row.duedate = day
+    row.source = 'calender'
 
 @app.route('/create_todo', methods=['GET'])
 def create_todo():
