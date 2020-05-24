@@ -82,9 +82,10 @@ def create_todo():
 
     externalid = request.args.get('externalid')
     weekday = request.args.get('weekday')
+    executionDate = request.args.get('executionDate')
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("URL")
-    createNotionTask(token_v2, url, todo, category, externalid, weekday)
+    createNotionTask(token_v2, url, todo, category, externalid, weekday, executionDate)
     return f'added {todo} in {category} to Notion!'
 
 @app.route('/update_todo', methods=['GET'])
