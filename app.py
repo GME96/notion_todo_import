@@ -113,7 +113,7 @@ def structureNotion():
     date = request.args.get('date')
     string_date = request.args.get('string_date')
     token_v2 = os.environ.get("TOKEN")
-    createEntryHabitTracker(token_v2, date, string_date)
+    structureNotion(token_v2, date, string_date)
     return f'added  in  to Notion!'
 
 if __name__ == '__main__':
