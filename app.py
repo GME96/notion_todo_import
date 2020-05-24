@@ -40,7 +40,7 @@ def createNotionTaskFromCalender(token, collectionURL, content, externalid, dued
     client = NotionClient(token)
     cv = client.get_collection_view(collectionURL)
     row = cv.collection.add_row()
-    row.title = duedate[11:16] + ' ' + content
+    row.title = (duedate[11:16] + ' ' + content)
     row.category = 'privat'
     row.externalid = externalid
     day = datetime.strptime(duedate[:10], '%Y-%m-%d')
