@@ -16,7 +16,7 @@ url_todo = 'https://www.notion.so/1be6bd1ea4c9411e88f3f52dc05a4f7c?v=6e582135b0c
 url_tagesplan = 'https://www.notion.so/1cc58f95eeed473ca916efc14944c1ca?v=f9ad0cfd0bba413baf9361b401545dd8'
 #today = date.today()
 
-def createNotionTask(token, collectionURL, content, category, externalid, weekday):
+def createNotionTask(token, collectionURL, content, category, externalid, weekday, executionDate):
     # notion
     client = NotionClient(token)
     cv = client.get_collection_view(collectionURL)
@@ -25,6 +25,7 @@ def createNotionTask(token, collectionURL, content, category, externalid, weekda
     row.category = category
     row.externalid = externalid
     row.Wochentag = weekday
+    row.executionDate = datetime.strptime(executionDate[:10], '%Y-%m-%d')
 
 def updateNotionTask(token, collectionURL, externalid):
     # notion
@@ -51,8 +52,8 @@ def createEntryHabitTracker(token, date, string_date):
     client = NotionClient(token)
     cv = client.get_collection_view(url_habittracker)
     row = cv.collection.add_row()
-    row.title = string_date
-    row.date = date
+    row.title = datetime
+    row.date = datetime.strptime(date[:10], '%Y-%m-%d')
 
 def structureNotion(token, date, string_date):
     createEntryHabitTracker(token, date, string_date)
