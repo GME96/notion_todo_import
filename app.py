@@ -55,8 +55,6 @@ def createEntryHabitTracker(token, date, string_date):
     row.date = date
 
 def structureNotion(token, date, string_date):
-    date = request.args.get('date')
-    string_date = request.args.get('string_date')
     createEntryHabitTracker(token, date, string_date)
 
 @app.route('/create_todo', methods=['GET'])
