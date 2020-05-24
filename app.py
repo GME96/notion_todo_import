@@ -45,7 +45,7 @@ def createNotionTaskFromCalender(token, collectionURL, content, externalid, dued
     row.externalid = externalid
     day = datetime.strptime(duedate[:10], '%Y-%m-%d')
     row.duedate = day
-    row.executionDate = day
+    row.executionDate = datetime.strptime(executionDate[:10], '%Y-%m-%d')
     row.source = 'calender'
 
 def createEntryHabitTracker(token, date, string_date):
@@ -104,6 +104,7 @@ def create_todo_calender():
     content = request.args.get('content')
     duedate = request.args.get('duedate')
     externalid = request.args.get('externalid')
+    executionDate = request.args.get('executionDate')
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("URL")
     createNotionTaskFromCalender(token_v2, url, content, externalid, duedate, executionDate)
