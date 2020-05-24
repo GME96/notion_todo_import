@@ -54,7 +54,7 @@ def createEntryHabitTracker(token):
     row.date = today
 
 def structureNotion(token):
-
+    createEntryHabitTracker(token)
 
 @app.route('/create_todo', methods=['GET'])
 def create_todo():
