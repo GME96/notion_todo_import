@@ -108,8 +108,8 @@ def create_todo_calender():
     createNotionTaskFromCalender(token_v2, url, content, externalid, duedate)
     return f'added  in  to Notion!'
 
-@app.route('/structureNotion', methods=['GET'])
-def structureNotion():
+@app.route('/structureNotionDay', methods=['GET'])
+def structureNotionDay():
     date = request.args.get('date')
     string_date = request.args.get('string_date')
     token_v2 = os.environ.get("TOKEN")
