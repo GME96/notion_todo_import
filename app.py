@@ -35,7 +35,7 @@ def updateNotionTask(token, collectionURL, externalid):
         if row.externalid == externalid:
             row.done = True
 
-def createNotionTaskFromCalender(token, collectionURL, content, externalid, duedate):
+def createNotionTaskFromCalender(token, collectionURL, content, externalid, duedate, executionDate):
     # notion
     client = NotionClient(token)
     cv = client.get_collection_view(collectionURL)
@@ -45,6 +45,7 @@ def createNotionTaskFromCalender(token, collectionURL, content, externalid, dued
     row.externalid = externalid
     day = datetime.strptime(duedate[:10], '%Y-%m-%d')
     row.duedate = day
+    row.executionDate = day
     row.source = 'calender'
 
 def createEntryHabitTracker(token, date, string_date):
@@ -103,9 +104,10 @@ def create_todo_calender():
     content = request.args.get('content')
     duedate = request.args.get('duedate')
     externalid = request.args.get('externalid')
+    executionDate = request.args.get('executionDate')
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("URL")
-    createNotionTaskFromCalender(token_v2, url, content, externalid, duedate)
+    createNotionTaskFromCalender(token_v2, url, content, externalid, duedate, executionDate)
     return f'added  in  to Notion!'
 
 @app.route('/structureNotionDay', methods=['GET'])
