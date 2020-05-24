@@ -52,7 +52,7 @@ def createEntryHabitTracker(token, date, string_date):
     client = NotionClient(token)
     cv = client.get_collection_view(url_habittracker)
     row = cv.collection.add_row()
-    row.title = datetime.strptime(date[:10], '%Y-%m-%d')
+    row.title = date[:10]
     row.date = datetime.strptime(date[:10], '%Y-%m-%d')
 
 def structureNotion(token, date, string_date):
