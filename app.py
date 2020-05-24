@@ -1,10 +1,10 @@
 
 import os
-#import datetime
 from notion.client import NotionClient
 from flask import Flask
 from flask import request
-#from datetime import datetime, timedelta
+import datetime
+from datetime import datetime, timedelta
 
 
 app = Flask(__name__)
@@ -46,14 +46,13 @@ def createNotionTaskFromCalender(token, collectionURL, content, externalid, dued
     row.duedate = day
     row.source = 'calender'
 
-def createEntryHabitTracker(token):
+def createEntryHabitTracker(token, date, string_date):
     # notion
     client = NotionClient(token)
     cv = client.get_collection_view(url_habittracker)
     row = cv.collection.add_row()
-    row.title = 'test'
-    #row.title = today.strftime("%d.%b.%Y")
-    #row.date = today
+    row.title = string_date
+    row.date = date
 
 def structureNotion(token):
     createEntryHabitTracker(token)
@@ -109,8 +108,10 @@ def create_todo_calender():
 
 @app.route('/structureNotion', methods=['GET'])
 def structureNotion():
+    date = request.args.get('date')
+    string_date = request.args.get('string_date')
     token_v2 = os.environ.get("TOKEN")
-    createEntryHabitTracker(token_v2)
+    createEntryHabitTracker(token_v2, date, string_date)
     return f'added  in  to Notion!'
 
 if __name__ == '__main__':
