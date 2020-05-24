@@ -1,10 +1,10 @@
 
 import os
-import datetime
+#import datetime
 from notion.client import NotionClient
 from flask import Flask
 from flask import request
-from datetime import datetime, timedelta
+#from datetime import datetime, timedelta
 
 
 app = Flask(__name__)
@@ -14,7 +14,7 @@ url_dokumente = 'https://www.notion.so/ba416195321d49448e79f501a7016d15?v=07e6e7
 url_kaufen = 'https://www.notion.so/17d4e68c0ffb4478a6ba2834211d69ee?v=09cf9854e500440aa54863637496ec3c'
 url_todo = 'https://www.notion.so/1be6bd1ea4c9411e88f3f52dc05a4f7c?v=6e582135b0cc41889b459fccd40673d0'
 url_tagesplan = 'https://www.notion.so/1cc58f95eeed473ca916efc14944c1ca?v=f9ad0cfd0bba413baf9361b401545dd8'
-today = date.today()
+#today = date.today()
 
 def createNotionTask(token, collectionURL, content, category, externalid, weekday):
     # notion
@@ -51,8 +51,9 @@ def createEntryHabitTracker(token):
     client = NotionClient(token)
     cv = client.get_collection_view(url_habittracker)
     row = cv.collection.add_row()
-    row.title = today.strftime("%d.%b.%Y")
-    row.date = today
+    row.title = 'test'
+    #row.title = today.strftime("%d.%b.%Y")
+    #row.date = today
 
 def structureNotion(token):
     createEntryHabitTracker(token)
