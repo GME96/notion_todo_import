@@ -57,14 +57,14 @@ def createEntryHabitTracker(token, date, string_date):
     cv = client.get_collection_view(url_habittracker)
     row = cv.collection.add_row()
     row.title = date[9:10]
-    row.date = datetime.strptime(date[:10], '%Y-%m-%d')
+    row.date = date.strptime(date[:10], '%Y-%m-%d')
 
 def createEntryWeeklyPlanner(token, date):
     # notion
     client = NotionClient(token)
     cv = client.get_collection_view(url_weekly)
     row = cv.collection.add_row()
-    startdate =  datetime.strptime(date[:10], '%Y-%m-%d')
+    startdate =  date.strptime(date[:10], '%Y-%m-%d')
     enddate = startdate + timedelta(days=7)
     enddatestring = enddate.strftime("%d")
     title_text = date[9:10]  + ' - ' + enddatestring + '.' +  date[6:7] + '.' + date[0:4] ##convert bis date properly
