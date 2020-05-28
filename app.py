@@ -60,7 +60,6 @@ def createEntryHabitTracker(token, date, string_date):
     row.date = date.strptime(date[:10], '%Y-%m-%d')
 
 def createEntryWeeklyPlanner(token, date):
-    # notion
     client = NotionClient(token)
     cv = client.get_collection_view(url_weekly)
     row = cv.collection.add_row()
