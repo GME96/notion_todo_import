@@ -75,7 +75,7 @@ def sortTask(token):
     client = NotionClient(token)
     cv = client.get_collection_view(url_todo)
     for row in cv.collection.get_rows():
-        if row.externalid == False:
+        if row.done == False:
             if row.executionDate.weekday() == 0:
                 row.Wochentag = 'Monday'
             elif row.executionDate.weekday() == 1:
