@@ -5,6 +5,8 @@ from flask import Flask
 from flask import request
 import datetime
 from datetime import datetime, timedelta
+#from garminconnect import getHealthData
+import json
 
 
 app = Flask(__name__)
@@ -14,6 +16,7 @@ url_dokumente = 'https://www.notion.so/ba416195321d49448e79f501a7016d15?v=07e6e7
 url_kaufen = 'https://www.notion.so/17d4e68c0ffb4478a6ba2834211d69ee?v=09cf9854e500440aa54863637496ec3c'
 url_todo = 'https://www.notion.so/1be6bd1ea4c9411e88f3f52dc05a4f7c?v=6e582135b0cc41889b459fccd40673d0'
 url_tagesplan = 'https://www.notion.so/1cc58f95eeed473ca916efc14944c1ca?v=f9ad0cfd0bba413baf9361b401545dd8'
+url_weekly = 'https://www.notion.so/2daabbf4909b4ba6aa5033bd4f1f979f?v=01d0e7de43874af0b224b02be0209456'
 #today = date.today()
 
 def createNotionTask(token, collectionURL, content, category, externalid, weekday, executionDate):
@@ -53,11 +56,40 @@ def createEntryHabitTracker(token, date, string_date):
     client = NotionClient(token)
     cv = client.get_collection_view(url_habittracker)
     row = cv.collection.add_row()
-    row.title = date[:10]
+    row.title = date[9:10]
     row.date = datetime.strptime(date[:10], '%Y-%m-%d')
+
+def createEntryWeeklyPlanner(token, date):
+    # notion
+    client = NotionClient(token)
+    cv = client.get_collection_view(url_weekly)
+    row = cv.collection.add_row()
+    startdate =  datetime.strptime(date[:10], '%Y-%m-%d')
+    enddate = startdate + datetime.timedelta(days=7)
+    enddatestring = enddate.strftime("%d")
+    title_text = date[:10]  + ' - ' + enddatestring + '.' +  date[6:7] + '.' + date[1:4] ##convert bis date properly
+    row.title = title_text
+    row.startdate = startdate
+    row.enddate = enddate
+
+
+# def setHealthDataToHabitTracker():
+#     # client = NotionClient(token)
+#     # cv = client.get_collection_view(url_habittracker)
+#     # for row in cv.collection.get_rows(search=today):
+#     #     if row.externalid == externalid:
+#     #         row.done = True
+#     response = getHealthData()
+#     dump = json.dumps(response)
+#     data = json.loads(dump)
+#     totalSteps = data['totalSteps']
+#     print(totalSteps)
+#     return totalSteps
 
 def structureNotion(token, date, string_date):
     createEntryHabitTracker(token, date, string_date)
+    #if datetime.datetime.today().weekday() == 1
+    createEntryWeeklyPlanner(token, date)
 
 @app.route('/create_todo', methods=['GET'])
 def create_todo():
