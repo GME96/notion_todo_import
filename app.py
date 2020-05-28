@@ -88,8 +88,8 @@ def createEntryWeeklyPlanner(token, date):
 
 def structureNotion(token, date, string_date):
     createEntryHabitTracker(token, date, string_date)
-    #if datetime.today().weekday() == 1
-    createEntryWeeklyPlanner(token, date)
+    if datetime.today().weekday() == 1
+        createEntryWeeklyPlanner(token, date)
 
 @app.route('/create_todo', methods=['GET'])
 def create_todo():
