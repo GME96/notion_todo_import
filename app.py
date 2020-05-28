@@ -71,6 +71,27 @@ def createEntryWeeklyPlanner(token, date):
     row.startdate = startdate
     row.enddate = enddate
 
+def sortTask(token):
+    client = NotionClient(token)
+    cv = client.get_collection_view(url_todo)
+    for row in cv.collection.get_rows():
+        if row.externalid == False:
+            if row.executionDate.weekday() == 0:
+                row.Wochentag = 'Monday'
+            elif row.executionDate.weekday() == 1:
+                row.Wochentag = 'Tuesday'
+            elif row.executionDate.weekday() == 2:
+                row.Wochentag = 'Wednesday'
+            elif row.executionDate.weekday() == 3:
+                row.Wochentag = 'Thursday'
+            elif row.executionDate.weekday() == 4:
+                row.Wochentag = 'Friday'
+            elif row.executionDate.weekday() == 5:
+                row.Wochentag = 'Saturday'
+            elif row.executionDate.weekday() == 6:
+                row.Wochentag = 'Sunday'
+
+
 
 # def setHealthDataToHabitTracker():
 #     # client = NotionClient(token)
@@ -87,7 +108,8 @@ def createEntryWeeklyPlanner(token, date):
 
 def structureNotion(token, date, string_date):
     createEntryHabitTracker(token, date, string_date)
-    if datetime.today().weekday() == 1
+    sortTask(token)
+    if datetime.today().weekday() == 0
         createEntryWeeklyPlanner(token, date)
 
 @app.route('/create_todo', methods=['GET'])
