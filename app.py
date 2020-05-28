@@ -67,7 +67,7 @@ def createEntryWeeklyPlanner(token, date):
     startdate =  datetime.strptime(date[:10], '%Y-%m-%d')
     enddate = startdate + timedelta(days=7)
     enddatestring = enddate.strftime("%d")
-    title_text = date[:10]  + ' - ' + enddatestring + '.' +  date[6:7] + '.' + date[1:4] ##convert bis date properly
+    title_text = date[9:10]  + ' - ' + enddatestring + '.' +  date[6:7] + '.' + date[0:4] ##convert bis date properly
     row.title = title_text
     row.startdate = startdate
     row.enddate = enddate
@@ -88,7 +88,7 @@ def createEntryWeeklyPlanner(token, date):
 
 def structureNotion(token, date, string_date):
     createEntryHabitTracker(token, date, string_date)
-    #if datetime.datetime.today().weekday() == 1
+    #if datetime.today().weekday() == 1
     createEntryWeeklyPlanner(token, date)
 
 @app.route('/create_todo', methods=['GET'])
