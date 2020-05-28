@@ -65,7 +65,7 @@ def createEntryWeeklyPlanner(token, date):
     cv = client.get_collection_view(url_weekly)
     row = cv.collection.add_row()
     startdate =  datetime.strptime(date[:10], '%Y-%m-%d')
-    enddate = startdate + datetime.timedelta(days=7)
+    enddate = startdate + timedelta(days=7)
     enddatestring = enddate.strftime("%d")
     title_text = date[:10]  + ' - ' + enddatestring + '.' +  date[6:7] + '.' + date[1:4] ##convert bis date properly
     row.title = title_text
