@@ -29,6 +29,7 @@ def createNotionTask(token, collectionURL, content, category, externalid, weekda
     row.externalid = externalid
     row.Wochentag = weekday
     row.executionDate = datetime.strptime(executionDate[:10], '%Y-%m-%d')
+    
 
 def updateNotionTask(token, collectionURL, externalid):
     # notion
