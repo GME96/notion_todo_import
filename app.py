@@ -29,7 +29,8 @@ def createNotionTask(token, collectionURL, content, category, externalid, weekda
     row.externalid = externalid
     row.Wochentag = weekday
     row.executionDate = datetime.strptime(executionDate[:10], '%Y-%m-%d')
-    
+
+
 
 def updateNotionTask(token, collectionURL, externalid):
     # notion
@@ -75,22 +76,22 @@ def createEntryWeeklyPlanner(token, date):
 def sortTask(token):
     client = NotionClient(token)
     cv = client.get_collection_view(url_todo)
-    # for row in cv.collection.get_rows(search=''):
-    #     if row.done == False:
-    #         if row.executionDate.weekday() == 0:
-    #             row.Wochentag = 'Monday'
-    #         elif row.executionDate.weekday() == 1:
-    #             row.Wochentag = 'Tuesday'
-    #         elif row.executionDate.weekday() == 2:
-    #             row.Wochentag = 'Wednesday'
-    #         elif row.executionDate.weekday() == 3:
-    #             row.Wochentag = 'Thursday'
-    #         elif row.executionDate.weekday() == 4:
-    #             row.Wochentag = 'Friday'
-    #         elif row.executionDate.weekday() == 5:
-    #             row.Wochentag = 'Saturday'
-    #         elif row.executionDate.weekday() == 6:
-    #             row.Wochentag = 'Sunday'
+    for row in cv.collection.get_rows(search=''):
+        if row.done == False:
+            if row.executionDate.weekday() == 0:
+                row.Wochentag = 'Monday'
+            elif row.executionDate.weekday() == 1:
+                row.Wochentag = 'Tuesday'
+            elif row.executionDate.weekday() == 2:
+                row.Wochentag = 'Wednesday'
+            elif row.executionDate.weekday() == 3:
+                row.Wochentag = 'Thursday'
+            elif row.executionDate.weekday() == 4:
+                row.Wochentag = 'Friday'
+            elif row.executionDate.weekday() == 5:
+                row.Wochentag = 'Saturday'
+            elif row.executionDate.weekday() == 6:
+                row.Wochentag = 'Sunday'
 
 
 
