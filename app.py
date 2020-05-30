@@ -65,7 +65,7 @@ def createEntryWeeklyPlanner(token, day):
     client = NotionClient(token)
     cv = client.get_collection_view(url_weekly)
     row = cv.collection.add_row()
-    startdate =  date.strptime(day[:10], '%Y-%m-%d')
+    startdate =  datetime.strptime(day[:10], '%Y-%m-%d')
     enddate = startdate + timedelta(days=7)
     enddatestring = enddate.strftime("%d")
     title_text = day[9:10]  + ' - ' + enddatestring + '.' +  day[6:7] + '.' + day[0:4] ##convert bis date properly
