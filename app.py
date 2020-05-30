@@ -4,7 +4,7 @@ from notion.client import NotionClient
 from flask import Flask
 from flask import request
 import datetime
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 #from garminconnect import getHealthData
 import json
 
@@ -53,45 +53,58 @@ def createNotionTaskFromCalender(token, collectionURL, content, externalid, dued
     row.executionDate = datetime.strptime(executionDate[:10], '%Y-%m-%d')
     row.source = 'calender'
 
-def createEntryHabitTracker(token, date, string_date):
+def createEntryHabitTracker(token, day, string_date, week):
     # notion
     client = NotionClient(token)
     cv = client.get_collection_view(url_habittracker)
     row = cv.collection.add_row()
-    row.title = date[9:10]
-    row.date = datetime.strptime(date[:10], '%Y-%m-%d')
+    datetimeobj = datetime.strptime(day[:10], '%Y-%m-%d')
+    row.title = datetimeobj.strftime("%d") + '.' +  datetimeobj.strftime("%m") + '.' + datetimeobj.strftime("%Y")
+    row.date = datetimeobj
+    row.week = week
 
-def createEntryWeeklyPlanner(token, day):
+def createEntryWeeklyPlanner(token):
     client = NotionClient(token)
     cv = client.get_collection_view(url_weekly)
     row = cv.collection.add_row()
-    startdate =  datetime.strptime(day[:10], '%Y-%m-%d')
+    startdate = date.today()
+    #startdate =  datetime.strptime(day[:10], '%Y-%m-%d')
     enddate = startdate + timedelta(days=7)
-    enddatestring = enddate.strftime("%d")
-    title_text = day[9:10]  + ' - ' + enddatestring + '.' +  day[6:7] + '.' + day[0:4] ##convert bis date properly
+    title_text = startdate.strftime("%d") + '.' +  startdate.strftime("%m") + ' - ' + enddate.strftime("%d") + '.' +  enddate.strftime("%m") + '.' + enddate.strftime("%Y")
     row.title = title_text
     row.startdate = startdate
     row.enddate = enddate
+    createDailyEntryInHabitTrackerForOneWeek(token, startdate, row)
+
+def createDailyEntryInHabitTrackerForOneWeek(token, startdate, week):
+    client = NotionClient(token)
+    cv = client.get_collection_view(url_habittracker)
+    token = token
+    for x in range(7):
+        date = startdate + timedelta(days=x)
+        stringdate = date.strftime('%Y-%m-%d')
+        createEntryHabitTracker(token, stringdate, '', week)
 
 def sortTask(token):
     client = NotionClient(token)
     cv = client.get_collection_view(url_todo)
     for row in cv.collection.get_rows(search=''):
         if row.done == False:
-            if row.executionDate.weekday() == 0:
-                row.Wochentag = 'Monday'
-            elif row.executionDate.weekday() == 1:
-                row.Wochentag = 'Tuesday'
-            elif row.executionDate.weekday() == 2:
-                row.Wochentag = 'Wednesday'
-            elif row.executionDate.weekday() == 3:
-                row.Wochentag = 'Thursday'
-            elif row.executionDate.weekday() == 4:
-                row.Wochentag = 'Friday'
-            elif row.executionDate.weekday() == 5:
-                row.Wochentag = 'Saturday'
-            elif row.executionDate.weekday() == 6:
-                row.Wochentag = 'Sunday'
+            row.executionDate
+            # if row.executionDate.weekday() == 0:
+            #     row.Wochentag = 'Monday'
+            # elif row.executionDate.weekday() == 1:
+            #     row.Wochentag = 'Tuesday'
+            # elif row.executionDate.weekday() == 2:
+            #     row.Wochentag = 'Wednesday'
+            # elif row.executionDate.weekday() == 3:
+            #     row.Wochentag = 'Thursday'
+            # elif row.executionDate.weekday() == 4:
+            #     row.Wochentag = 'Friday'
+            # elif row.executionDate.weekday() == 5:
+            #     row.Wochentag = 'Saturday'
+            # elif row.executionDate.weekday() == 6:
+            #     row.Wochentag = 'Sunday'
 
 
 
@@ -109,10 +122,10 @@ def sortTask(token):
 #     return totalSteps
 
 def structureNotion(token, date, string_date):
-    createEntryHabitTracker(token, date, string_date)
     sortTask(token)
-    # if datetime.today().weekday() == 0
-    #     createEntryWeeklyPlanner(token, date)
+
+def OnSundayEvening(token):
+    createEntryWeeklyPlanner(token)
 
 @app.route('/create_todo', methods=['GET'])
 def create_todo():
@@ -171,6 +184,12 @@ def structureNotionDay():
     string_date = request.args.get('string_date')
     token_v2 = os.environ.get("TOKEN")
     structureNotion(token_v2, date, string_date)
+    return f'added  in  to Notion!'
+
+@app.route('/CallOnSundayEvening', methods=['GET'])
+def CallOnSundayEvening():
+    token_v2 = os.environ.get("TOKEN")
+    OnSundayEvening(token_v2)
     return f'added  in  to Notion!'
 
 if __name__ == '__main__':
