@@ -67,8 +67,7 @@ def createEntryWeeklyPlanner(token):
     client = NotionClient(token)
     cv = client.get_collection_view(url_weekly)
     row = cv.collection.add_row()
-    startdate = date.today()
-    #startdate =  datetime.strptime(day[:10], '%Y-%m-%d')
+    startdate = date.today() + timedelta(days=1)
     enddate = startdate + timedelta(days=7)
     title_text = startdate.strftime("%d") + '.' +  startdate.strftime("%m") + ' - ' + enddate.strftime("%d") + '.' +  enddate.strftime("%m") + '.' + enddate.strftime("%Y")
     row.title = title_text
