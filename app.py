@@ -53,7 +53,7 @@ def createNotionTaskFromCalender(token, collectionURL, content, externalid, dued
     row.executionDate = datetime.strptime(executionDate[:10], '%Y-%m-%d')
     row.source = 'calender'
 
-def createEntryHabitTracker(token, day, string_date, week):
+def createEntryHabitTracker(token, day, string_date, week, weekday):
     # notion
     client = NotionClient(token)
     cv = client.get_collection_view(url_habittracker)
@@ -62,6 +62,7 @@ def createEntryHabitTracker(token, day, string_date, week):
     row.title = datetimeobj.strftime("%d") + '.' +  datetimeobj.strftime("%m") + '.' + datetimeobj.strftime("%Y")
     row.date = datetimeobj
     row.week = week
+    row.Wochentag = weekday
 
 def createEntryWeeklyPlanner(token):
     client = NotionClient(token)
@@ -82,7 +83,23 @@ def createDailyEntryInHabitTrackerForOneWeek(token, startdate, week):
     for x in range(7):
         date = startdate + timedelta(days=x)
         stringdate = date.strftime('%Y-%m-%d')
-        createEntryHabitTracker(token, stringdate, '', week)
+        if x == 0:
+            row.Wochentag = 'Montag'
+        elif x == 1:
+            row.Wochentag = 'Dienstag'
+        elif x == 2:
+            row.Wochentag = 'Mittwoch'
+        elif x == 3:
+            row.Wochentag = 'Donnerstag'
+        elif x == 4:
+            row.Wochentag = 'Freitag'
+        elif x == 5:
+            row.Wochentag = 'Samstag'
+        elif x == 6:
+            row.Wochentag = 'Sonntag'
+        createEntryHabitTracker(token, stringdate, '', week, weekday)
+
+
 
 def sortTask(token):
     client = NotionClient(token)
