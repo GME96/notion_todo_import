@@ -69,7 +69,7 @@ def createEntryWeeklyPlanner(token):
     cv = client.get_collection_view(url_weekly)
     row = cv.collection.add_row()
     startdate = date.today() + timedelta(days=1)
-    enddate = startdate + timedelta(days=7)
+    enddate = startdate + timedelta(days=6)
     title_text = startdate.strftime("%d") + '.' +  startdate.strftime("%m") + ' - ' + enddate.strftime("%d") + '.' +  enddate.strftime("%m") + '.' + enddate.strftime("%Y")
     row.title = title_text
     row.startdate = startdate
@@ -84,19 +84,19 @@ def createDailyEntryInHabitTrackerForOneWeek(token, startdate, week):
         date = startdate + timedelta(days=x)
         stringdate = date.strftime('%Y-%m-%d')
         if x == 0:
-            row.Wochentag = 'Montag'
+            weekday = 'Montag'
         elif x == 1:
-            row.Wochentag = 'Dienstag'
+            weekday = 'Dienstag'
         elif x == 2:
-            row.Wochentag = 'Mittwoch'
+            weekday = 'Mittwoch'
         elif x == 3:
-            row.Wochentag = 'Donnerstag'
+            weekday = 'Donnerstag'
         elif x == 4:
-            row.Wochentag = 'Freitag'
+            weekday = 'Freitag'
         elif x == 5:
-            row.Wochentag = 'Samstag'
+            weekday = 'Samstag'
         elif x == 6:
-            row.Wochentag = 'Sonntag'
+            weekday = 'Sonntag'
         createEntryHabitTracker(token, stringdate, '', week, weekday)
 
 
