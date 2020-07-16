@@ -17,6 +17,7 @@ url_kaufen = 'https://www.notion.so/17d4e68c0ffb4478a6ba2834211d69ee?v=09cf9854e
 url_todo = 'https://www.notion.so/1be6bd1ea4c9411e88f3f52dc05a4f7c?v=6e582135b0cc41889b459fccd40673d0'
 url_tagesplan = 'https://www.notion.so/1cc58f95eeed473ca916efc14944c1ca?v=f9ad0cfd0bba413baf9361b401545dd8'
 url_weekly = 'https://www.notion.so/2daabbf4909b4ba6aa5033bd4f1f979f?v=01d0e7de43874af0b224b02be0209456'
+url_month = 'https://www.notion.so/11ccde35d54449c9a41938960f3bb996?v=78b0d3bbc28946f8acaa002210a16ec4'
 #today = date.today()
 
 def createNotionTask(token, collectionURL, content, category, externalid, weekday, executionDate):
@@ -29,8 +30,6 @@ def createNotionTask(token, collectionURL, content, category, externalid, weekda
     row.externalid = externalid
     row.Wochentag = weekday
     row.executionDate = datetime.strptime(executionDate[:10], '%Y-%m-%d')
-
-
 
 def updateNotionTask(token, collectionURL, externalid):
     # notion
@@ -76,6 +75,37 @@ def createEntryWeeklyPlanner(token):
     row.enddate = enddate
     createDailyEntryInHabitTrackerForOneWeek(token, startdate, row)
 
+# def createNewMonth(token, startdate):
+#     client = NotionClient(token)
+#     cv = client.get_collection_view(url_month)
+#     token = token
+#     month_int = date.today().month
+#     if month_int == 1:
+#         month = 'Jänner'
+#     elif month_int == 2:
+#         month = 'Februar'
+#     elif month_int == 3:
+#         month = 'März'
+#     elif month_int == 4:
+#         month = 'April'
+#     elif month_int == 5:
+#         month = 'Mai'
+#     elif month_int == 6:
+#         month = 'Juni'
+#     elif month_int == 7:
+#         month = 'Juli'
+#     elif month_int == 8:
+#         month = 'August'
+#     elif month_int == 9:
+#         month = 'September'
+#     elif month_int == 10:
+#         month = 'Oktober'
+#     elif month_int == 11:
+#         month = 'November'
+#     elif month_int == 12:
+#         month = 'Dezember'
+#     row.title = month + ' ' + startdate.strftime("%Y")
+
 def createDailyEntryInHabitTrackerForOneWeek(token, startdate, week):
     client = NotionClient(token)
     cv = client.get_collection_view(url_habittracker)
@@ -98,8 +128,6 @@ def createDailyEntryInHabitTrackerForOneWeek(token, startdate, week):
         elif x == 6:
             weekday = 'Sonntag'
         createEntryHabitTracker(token, stringdate, '', week, weekday)
-
-
 
 def sortTask(token):
     client = NotionClient(token)
@@ -142,6 +170,20 @@ def structureNotion(token, date, string_date):
 
 def OnSundayEvening(token):
     createEntryWeeklyPlanner(token)
+
+
+def updateCalender(token):
+    client = NotionClient(token)
+    calender = client.get_collection_view(url_calender)
+    impfungen = client.get_collection_view(url_impfungen)
+    for row in impfungen.collection.get_rows(search=name):
+        if row.calender == None:
+            calenderEntry = calender.collection.add_row()
+            calenderEntry.name = row.name
+            calenderEntry.source = 'Impfungen'
+            row.calender = calenderEntry
+
+
 
 @app.route('/create_todo', methods=['GET'])
 def create_todo():
@@ -193,6 +235,13 @@ def create_todo_calender():
     url = os.environ.get("URL")
     createNotionTaskFromCalender(token_v2, url, content, externalid, duedate, executionDate)
     return f'added  in  to Notion!'
+
+@app.route('/updateCalender', methods=['GET'])
+def updateCalender():
+    token_v2 = os.environ.get("TOKEN")
+    url = os.environ.get("URL")
+    updateCalender(token_v2, url)
+    return f'Calender was updated'
 
 @app.route('/structureNotionDay', methods=['GET'])
 def structureNotionDay():
