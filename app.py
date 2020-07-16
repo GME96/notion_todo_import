@@ -179,7 +179,7 @@ def updateCalender(token):
     calender = client.get_collection_view(url_calender)
     impfungen = client.get_collection_view(url_impfungen)
     for row in impfungen.collection.get_rows(search=''):
-        if row.calender == None:
+        if row.exportedToCalender == False:
             calenderEntry = calender.collection.add_row()
             calenderEntry.name = row.name
             calenderEntry.source = 'Impfungen'
