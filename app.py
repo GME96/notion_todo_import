@@ -182,7 +182,7 @@ def updateCalender(token):
     for impfung in impfungen.collection.get_rows(search=''):
         if impfung.exportedToCalender == False:
             calenderEntry = calender.collection.add_row()
-            calenderEntry.name = row.name
+            calenderEntry.name = impfung.name
             calenderEntry.source = 'Impfungen'
             impfung.calender = calenderEntry
             impfung.exportedToCalender = True
