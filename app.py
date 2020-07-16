@@ -178,12 +178,21 @@ def updateCalender(token):
     client = NotionClient(token)
     calender = client.get_collection_view(url_calender)
     impfungen = client.get_collection_view(url_impfungen)
-    for row in impfungen.collection.get_rows(search=''):
-        if row.exportedToCalender == False:
+    todo = client.get_collection_view(url_todo)
+    for impfung in impfungen.collection.get_rows(search=''):
+        if impfung.exportedToCalender == False:
             calenderEntry = calender.collection.add_row()
             calenderEntry.name = row.name
             calenderEntry.source = 'Impfungen'
-            row.calender = calenderEntry
+            impfung.calender = calenderEntry
+            impfung.exportedToCalender = True
+    for to in todo.collection.get_rows(search=''):
+        if to.exportedToCalender == False:
+            calenderEntry = calender.collection.add_row()
+            calenderEntry.name = row.name
+            calenderEntry.source = 'ToDo'
+            to.calender = calenderEntry
+            to.exportedToCalender = True
 
 
 
