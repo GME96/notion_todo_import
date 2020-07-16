@@ -47,7 +47,7 @@ def createNotionTaskFromCalender(token, collectionURL, content, externalid, dued
     client = NotionClient(token)
     cv = client.get_collection_view(url_kalender_sync)
     row = cv.collection.add_row()
-    row.title = (duedate[11:16] + ' ' + content)
+    row.name = (duedate[11:16] + ' ' + content)
     row.category = 'privat'
     row.externalid = externalid
     day = datetime.strptime(duedate[:10], '%Y-%m-%d')
@@ -181,6 +181,7 @@ def updateCalender(token):
     impfungen = client.get_collection_view(url_impfungen)
     kalender = client.get_collection_view(url_kalender_sync)
     todo = client.get_collection_view(url_todo)
+    freunde = client.get_collection_view(url_freunde)
     for impfung in impfungen.collection.get_rows(search=''):
         if impfung.exportedToCalender == False:
             calenderEntry = calender.collection.add_row()
@@ -202,7 +203,13 @@ def updateCalender(token):
             calenderEntry.type = 'Kalender'
             kalender.calender = calenderEntry
             kalender.exportedToCalender = True
-
+    for person in freunde.collection.get_rows(search=''):
+        if person.exportedToCalender == False:
+            calenderEntry = calender.collection.add_row()
+            calenderEntry.name = person.name
+            calenderEntry.type = 'Geburtstag'
+            person.calender = calenderEntry
+            person.exportedToCalender = True
 
 
 
