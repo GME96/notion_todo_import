@@ -18,6 +18,8 @@ url_todo = 'https://www.notion.so/1be6bd1ea4c9411e88f3f52dc05a4f7c?v=6e582135b0c
 url_tagesplan = 'https://www.notion.so/1cc58f95eeed473ca916efc14944c1ca?v=f9ad0cfd0bba413baf9361b401545dd8'
 url_weekly = 'https://www.notion.so/2daabbf4909b4ba6aa5033bd4f1f979f?v=01d0e7de43874af0b224b02be0209456'
 url_month = 'https://www.notion.so/11ccde35d54449c9a41938960f3bb996?v=78b0d3bbc28946f8acaa002210a16ec4'
+url_impfungen = 'https://www.notion.so/4d70f923f8944bb49737cf90ce675839?v=8910c7d5bf6341339aeb83ec0a531aa3'
+url_calender = 'https://www.notion.so/8ed763fd1835430791484321a0d40a44?v=eaaa5067b942495692ad6c9aa3532870'
 #today = date.today()
 
 def createNotionTask(token, collectionURL, content, category, externalid, weekday, executionDate):
