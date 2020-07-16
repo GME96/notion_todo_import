@@ -189,7 +189,7 @@ def updateCalender(token):
     for to in todo.collection.get_rows(search=''):
         if to.exportedToCalender == False:
             calenderEntry = calender.collection.add_row()
-            calenderEntry.name = row.name
+            calenderEntry.name = to.name
             calenderEntry.source = 'ToDo'
             to.calender = calenderEntry
             to.exportedToCalender = True
