@@ -183,14 +183,14 @@ def updateCalender(token):
         if impfung.exportedToCalender == False:
             calenderEntry = calender.collection.add_row()
             calenderEntry.name = impfung.name
-            calenderEntry.source = 'Impfungen'
+            calenderEntry.type = 'Impfungen'
             impfung.calender = calenderEntry
             impfung.exportedToCalender = True
     for to in todo.collection.get_rows(search=''):
         if to.exportedToCalender == False:
             calenderEntry = calender.collection.add_row()
             calenderEntry.name = to.name
-            calenderEntry.source = 'ToDo'
+            calenderEntry.type = 'ToDo'
             to.calender = calenderEntry
             to.exportedToCalender = True
 
