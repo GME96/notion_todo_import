@@ -20,6 +20,7 @@ url_weekly = 'https://www.notion.so/2daabbf4909b4ba6aa5033bd4f1f979f?v=01d0e7de4
 url_month = 'https://www.notion.so/11ccde35d54449c9a41938960f3bb996?v=78b0d3bbc28946f8acaa002210a16ec4'
 url_impfungen = 'https://www.notion.so/4d70f923f8944bb49737cf90ce675839?v=8910c7d5bf6341339aeb83ec0a531aa3'
 url_calender = 'https://www.notion.so/8ed763fd1835430791484321a0d40a44?v=eaaa5067b942495692ad6c9aa3532870'
+url_kalender_sync = 'https://www.notion.so/3661b0a791d54578960a63052428ab28?v=7d63056f24a64bf0a3c89495735131e8'
 #today = date.today()
 
 def createNotionTask(token, collectionURL, content, category, externalid, weekday, executionDate):
@@ -44,7 +45,7 @@ def updateNotionTask(token, collectionURL, externalid):
 def createNotionTaskFromCalender(token, collectionURL, content, externalid, duedate, executionDate):
     # notion
     client = NotionClient(token)
-    cv = client.get_collection_view(collectionURL)
+    cv = client.get_collection_view(url_kalender_sync)
     row = cv.collection.add_row()
     row.title = (duedate[11:16] + ' ' + content)
     row.category = 'privat'
@@ -178,6 +179,7 @@ def updateCalender(token):
     client = NotionClient(token)
     calender = client.get_collection_view(url_calender)
     impfungen = client.get_collection_view(url_impfungen)
+    kalender = client.get_collection_view(url_kalender_sync)
     todo = client.get_collection_view(url_todo)
     for impfung in impfungen.collection.get_rows(search=''):
         if impfung.exportedToCalender == False:
@@ -193,6 +195,14 @@ def updateCalender(token):
             calenderEntry.type = 'ToDo'
             to.calender = calenderEntry
             to.exportedToCalender = True
+    for kalender in kalender.collection.get_rows(search=''):
+        if kalender.exportedToCalender == False:
+            calenderEntry = calender.collection.add_row()
+            calenderEntry.name = kalender.name
+            calenderEntry.type = 'Kalender'
+            kalender.calender = calenderEntry
+            kalender.exportedToCalender = True
+
 
 
 
