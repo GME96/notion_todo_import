@@ -197,7 +197,7 @@ def updateCalender(token):
             calenderEntry.type = 'ToDo'
             to.calender = calenderEntry
             to.exportedToCalender = True
-    for eintrag in kalender.collection.get_rows(search=''):
+    for eintrag in calender.collection.get_rows(search=''):
         if eintrag.exportedToCalender == False:
             calenderEntry = calender.collection.add_row()
             calenderEntry.name = eintrag.name
