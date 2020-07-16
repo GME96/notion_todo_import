@@ -237,10 +237,9 @@ def create_todo_calender():
     return f'added  in  to Notion!'
 
 @app.route('/updateCalender', methods=['GET'])
-def updateCalender():
+def CallupdateCalender():
     token_v2 = os.environ.get("TOKEN")
-    url = os.environ.get("URL")
-    updateCalender(token_v2, url)
+    updateCalender(token_v2)
     return f'Calender was updated'
 
 @app.route('/structureNotionDay', methods=['GET'])
