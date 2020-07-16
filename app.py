@@ -21,6 +21,7 @@ url_month = 'https://www.notion.so/11ccde35d54449c9a41938960f3bb996?v=78b0d3bbc2
 url_impfungen = 'https://www.notion.so/4d70f923f8944bb49737cf90ce675839?v=8910c7d5bf6341339aeb83ec0a531aa3'
 url_calender = 'https://www.notion.so/8ed763fd1835430791484321a0d40a44?v=eaaa5067b942495692ad6c9aa3532870'
 url_kalender_sync = 'https://www.notion.so/3661b0a791d54578960a63052428ab28?v=7d63056f24a64bf0a3c89495735131e8'
+url_freunde = 'https://www.notion.so/76bc0c7f21ef40b6a64ec1e7ab712555?v=335a5d037ca54b3aae64731031adaa7e'
 #today = date.today()
 
 def createNotionTask(token, collectionURL, content, category, externalid, weekday, executionDate):
