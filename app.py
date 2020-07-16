@@ -178,7 +178,7 @@ def updateCalender(token):
     client = NotionClient(token)
     calender = client.get_collection_view(url_calender)
     impfungen = client.get_collection_view(url_impfungen)
-    for row in impfungen.collection.get_rows(search=name):
+    for row in impfungen.collection.get_rows(search=''):
         if row.calender == None:
             calenderEntry = calender.collection.add_row()
             calenderEntry.name = row.name
