@@ -197,13 +197,13 @@ def updateCalender(token):
             calenderEntry.type = 'ToDo'
             to.calender = calenderEntry
             to.exportedToCalender = True
-    for kalender in kalender.collection.get_rows(search=''):
-        if kalender.exportedToCalender == False:
+    for eintrag in kalender.collection.get_rows(search=''):
+        if eintrag.exportedToCalender == False:
             calenderEntry = calender.collection.add_row()
-            calenderEntry.name = kalender.name
+            calenderEntry.name = eintrag.name
             calenderEntry.type = 'Kalender'
-            kalender.calender = calenderEntry
-            kalender.exportedToCalender = True
+            eintrag.calender = calenderEntry
+            eintrag.exportedToCalender = True
     for person in freunde.collection.get_rows(search=''):
         if person.exportedToCalender == False:
             calenderEntry = calender.collection.add_row()
