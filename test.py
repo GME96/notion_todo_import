@@ -1,5 +1,8 @@
 from garminconnect import getHealthData
 import json
+from datetime import datetime, timedelta
+print(datetime.today().weekday())
+
 
 def setHealthDataToHabitTracker():
     # client = NotionClient(token)
@@ -15,6 +18,3 @@ def setHealthDataToHabitTracker():
     return totalSteps
 
 print(setHealthDataToHabitTracker())
-
-
-print(datetime.today().weekday())
