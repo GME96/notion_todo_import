@@ -87,11 +87,12 @@ def createEntryWeeklyPlanner(token):
     row.title = title_text
     row.startdate = startdate
     row.enddate = enddate
+
     listOfGoals = []
     for goal in goals.collection.get_rows(search=''):
-        startdate = goal.startdate.start
+        goalstartdate = goal.startdate.start
         duedate =  goal.duedate.start
-        if startdate <= startdate.date() <= duedate:
+        if goalstartdate <= startdate.date() <= duedate:
             listOfGoals.append(goal)
             row.goals = listOfGoals
     createDailyEntryInHabitTrackerForOneWeek(token, startdate, row)
