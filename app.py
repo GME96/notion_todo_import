@@ -77,6 +77,7 @@ def createEntryHabitTracker(token, day, string_date, week, weekday):
             row.goals = listOfGoals
 
 def createEntryWeeklyPlanner(token):
+    goals = client.get_collection_view(url_goals)
     client = NotionClient(token)
     cv = client.get_collection_view(url_weekly)
     row = cv.collection.add_row()
@@ -86,6 +87,13 @@ def createEntryWeeklyPlanner(token):
     row.title = title_text
     row.startdate = startdate
     row.enddate = enddate
+    listOfGoals = []
+    for goal in goals.collection.get_rows(search=''):
+        startdate = goal.startdate.start
+        duedate =  goal.duedate.start
+        if startdate <= startdate.date() <= duedate:
+            listOfGoals.append(goal)
+            row.goals = listOfGoals
     createDailyEntryInHabitTrackerForOneWeek(token, startdate, row)
 
 # def createNewMonth(token, startdate):
