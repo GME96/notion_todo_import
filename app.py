@@ -68,11 +68,13 @@ def createEntryHabitTracker(token, day, string_date, week, weekday):
     row.date = datetimeobj
     row.week = week
     row.Wochentag = weekday
+    listOfGoals = []
     for goal in goals.collection.get_rows(search=''):
         startdate = goal.startdate.start
         duedate =  goal.duedate.start
         if startdate <= datetimeobj.date() <= duedate:
-            row.goals = goal 
+            listOfGoals.insert(goal)
+            row.goals = listOfGoals
 
 def createEntryWeeklyPlanner(token):
     client = NotionClient(token)
