@@ -77,10 +77,10 @@ def createEntryHabitTracker(token, day, string_date, week, weekday):
             row.goals = listOfGoals
 
 def createEntryWeeklyPlanner(token):
-    goals = client.get_collection_view(url_goals)
     client = NotionClient(token)
     cv = client.get_collection_view(url_weekly)
     row = cv.collection.add_row()
+    goals = client.get_collection_view(url_goals)
     startdate = date.today() + timedelta(days=1)
     enddate = startdate + timedelta(days=6)
     title_text = startdate.strftime("%d") + '.' +  startdate.strftime("%m") + ' - ' + enddate.strftime("%d") + '.' +  enddate.strftime("%m") + '.' + enddate.strftime("%Y")
