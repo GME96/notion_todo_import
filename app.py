@@ -45,12 +45,13 @@ def updateNotionTask(token, collectionURL, externalid):
         if row.externalid == externalid:
             row.done = True
 
-def insertIntoInbox(token, collectionURL, header):
+def insertIntoInbox(token, collectionURL, header, body):
     # notion
     client = NotionClient(token)
     cv = client.get_collection_view(url_inbox)
     newInbox = cv.collection.add_row()
     newInbox.name = header
+    newInbox.children.add_new(TextBlock, title=header)
 
 
 def createNotionTaskFromCalender(token, collectionURL, content, externalid, duedate, executionDate):
@@ -286,7 +287,7 @@ def insertInbox():
     header = request.args.get('header')
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("URL")
-    insertIntoInbox(token_v2, url, header)
+    insertIntoInbox(token_v2, url, header, body)
     return f'checked set done to Notion!'
 
 @app.route('/create_todo_calender', methods=['GET'])
