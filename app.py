@@ -52,7 +52,7 @@ def insertIntoInbox(token, collectionURL, header, body):
     cv = client.get_collection_view(url_inbox)
     newInbox = cv.collection.add_row()
     newInbox.name = header
-    newInbox.children.add_new(TextBlock, title=header)
+    newInbox.children.add_new(TextBlock, title=body)
 
 
 def createNotionTaskFromCalender(token, collectionURL, content, externalid, duedate, executionDate):
