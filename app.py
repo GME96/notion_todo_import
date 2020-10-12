@@ -23,6 +23,7 @@ url_calender = 'https://www.notion.so/8ed763fd1835430791484321a0d40a44?v=eaaa506
 url_kalender_sync = 'https://www.notion.so/3661b0a791d54578960a63052428ab28?v=7d63056f24a64bf0a3c89495735131e8'
 url_freunde = 'https://www.notion.so/76bc0c7f21ef40b6a64ec1e7ab712555?v=335a5d037ca54b3aae64731031adaa7e'
 url_goals = 'https://www.notion.so/411fdf381a154f8fbed55749df7b18bd?v=6ac7c0cbb2734110be173d9cb220ac72'
+url_inbox = 'https://www.notion.so/6df97f327e8047299fa3334cd52d391f?v=06bdc08cf3344058bd632f0e48287041'
 #today = date.today()
 
 def createNotionTask(token, collectionURL, content, category, externalid, weekday, executionDate):
@@ -43,6 +44,14 @@ def updateNotionTask(token, collectionURL, externalid):
     for row in cv.collection.get_rows(search=externalid):
         if row.externalid == externalid:
             row.done = True
+
+def insertIntoInbox(token, collectionURL, header):
+    # notion
+    client = NotionClient(token)
+    cv = client.get_collection_view(url_inbox)
+    newInbox = cv.collection.add_row()
+    newInbox.name = header
+
 
 def createNotionTaskFromCalender(token, collectionURL, content, externalid, duedate, executionDate):
     # notion
@@ -270,6 +279,14 @@ def update_todo():
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("URL")
     updateNotionTask(token_v2, url, externalid)
+    return f'checked set done to Notion!'
+
+@app.route('/insertInbox', methods=['GET'])
+def insertInbox():
+    header = request.args.get('header')
+    token_v2 = os.environ.get("TOKEN")
+    url = os.environ.get("URL")
+    insertIntoInbox(token_v2, url, header)
     return f'checked set done to Notion!'
 
 @app.route('/create_todo_calender', methods=['GET'])
