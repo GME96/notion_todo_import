@@ -285,6 +285,7 @@ def update_todo():
 @app.route('/insertInbox', methods=['GET'])
 def insertInbox():
     header = request.args.get('header')
+    body = request.args.get('body')
     token_v2 = os.environ.get("TOKEN")
     url = os.environ.get("URL")
     insertIntoInbox(token_v2, url, header, body)
